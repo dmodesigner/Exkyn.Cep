@@ -5,7 +5,7 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IAddressRepository : IBaseRepository<Adresses>
     {
-        ZipCodeModel SearchByCep(string zipCode);
+        ZipCodeModel? SearchByCep(string zipCode);
         List<ZipCodeModel> SearchByAddress(string address);
     }
 }

@@ -9,7 +9,7 @@ namespace Data.Repositories
     {
         public AddressRepository(CepBrasilDB ctx) : base(ctx) { }
 
-        public ZipCodeModel SearchByCep(string zipCode)
+        public ZipCodeModel? SearchByCep(string zipCode)
         {
             return (from e in _ctx.Adresses
                     join b in _ctx.Neighborhoods on e.NeighborhoodID equals b.NeighborhoodID
