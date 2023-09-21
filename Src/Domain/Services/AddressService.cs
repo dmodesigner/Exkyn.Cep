@@ -6,11 +6,11 @@ using Domain.Models;
 
 namespace Domain.Services
 {
-    public class AddressApp : BaseService<Adresses>, IAddressService
+    public class AddressService : BaseService<Adresses>, IAddressService
     {
         private readonly IAddressRepository _Repository;
 
-        public AddressApp(IAddressRepository Repository) : base(Repository) => _Repository = Repository;
+        public AddressService(IAddressRepository Repository) : base(Repository) => _Repository = Repository;
 
         public ReturnModel<ZipCodeModel> SearchByCep(string zipCode)
         {

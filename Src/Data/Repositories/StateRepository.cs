@@ -4,9 +4,9 @@ using Domain.Interfaces.Repositories;
 
 namespace Data.Repositories
 {
-    public class StatesRepository : BaseRepository<States>, IStatesRepository
+    public class StateRepository : BaseRepository<States>, IStateRepository
     {
-        public StatesRepository(CepBrasilDB ctx) : base(ctx) { }
+        public StateRepository(CepBrasilDB ctx) : base(ctx) { }
 
         public List<States> SearchByState()
         {

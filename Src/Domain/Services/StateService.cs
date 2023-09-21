@@ -5,11 +5,11 @@ using Domain.Models;
 
 namespace Domain.Services
 {
-    public class StatesService : BaseService<States>, IStateService
+    public class StateService : BaseService<States>, IStateService
     {
-        private readonly IStatesRepository _Repository;
+        private readonly IStateRepository _Repository;
 
-        public StatesService(IStatesRepository Repository) : base(Repository) => _Repository = Repository;
+        public StateService(IStateRepository Repository) : base(Repository) => _Repository = Repository;
 
         public ReturnModel<States> SearchByState()
         {

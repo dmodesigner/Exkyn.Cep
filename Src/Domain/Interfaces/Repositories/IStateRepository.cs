@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.Repositories
 {
-    public interface IStatesRepository : IBaseRepository<States>
+    public interface IStateRepository : IBaseRepository<States>
     {
         List<States> SearchByState();
     }
