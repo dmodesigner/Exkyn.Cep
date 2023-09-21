@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 - Batch", "00 - Batch", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Src\Api\Api.csproj", "{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateBase", "Batch\CreateBase\CreateBase.csproj", "{B594F39B-65DE-4549-BD3B-09326364BAAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +25,17 @@ Global
 		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B594F39B-65DE-4549-BD3B-09326364BAAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B594F39B-65DE-4549-BD3B-09326364BAAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B594F39B-65DE-4549-BD3B-09326364BAAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B594F39B-65DE-4549-BD3B-09326364BAAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C} = {1977116D-7DC1-4E16-B7E3-CA0F698BFD87}
+		{B594F39B-65DE-4549-BD3B-09326364BAAE} = {99A40C4D-0939-4A44-9516-85DA397C29F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9B79595-63C9-4518-9B80-C1D0B0BAEF04}
