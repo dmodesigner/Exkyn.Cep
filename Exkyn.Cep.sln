@@ -3,9 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - WebApi", "01 - WebApi", "{1977116D-7DC1-4E16-B7E3-CA0F698BFD87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Domain", "02 - Domain", "{88F1D860-84FE-4121-8132-0E512C00A397}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Infra", "03 - Infra", "{788E9ADC-E22C-4E2F-8724-8B5DB4F6F5F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 - Batch", "00 - Batch", "{99A40C4D-0939-4A44-9516-85DA397C29F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Src\Api\Api.csproj", "{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C3CDB024-1BDD-46CB-9094-D0FC96AF511C} = {1977116D-7DC1-4E16-B7E3-CA0F698BFD87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9B79595-63C9-4518-9B80-C1D0B0BAEF04}
