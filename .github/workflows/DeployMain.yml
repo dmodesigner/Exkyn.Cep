@@ -2,9 +2,9 @@ name: Deploy do site "cep.exkyn.com.br" em produção
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 env:
   LOCAL: ${{ github.workspace }}/output/
