@@ -3,16 +3,17 @@ using System.Data;
 
 var files = new List<string>();
 files.Add("Estado.xlsx");
-//files.Add("Cidade.xlsx");
-//files.Add("Bairro.xlsx");
-//files.Add("Endereço.xlsx");
+files.Add("Cidade.xlsx");
+files.Add("Bairro.xlsx");
+files.Add("Endereço.xlsx");
 
 foreach (var file in files)
 {
     var dt = ConvertExcelInDataTable(file);
 
     //Validar os dados da planilha gerada (sempre que necessario
-    //Chamar a API para fazer o insert dos dados na  base de dados
+
+    InsertIntoInBase(dt);
 }
 
 DataTable ConvertExcelInDataTable(string file)
@@ -35,3 +36,7 @@ DataTable ConvertExcelInDataTable(string file)
     return dt;
 }
 
+void InsertIntoInBase(DataTable dt)
+{
+    throw new NotImplementedException("Método não implementado");
+}
