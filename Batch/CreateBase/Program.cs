@@ -1,7 +1,6 @@
 ﻿using Aspose.Cells;
 using System.Data;
 using System.Data.SqlClient;
-using System.Net.Security;
 using System.Transactions;
 
 var files = new List<string>
@@ -17,8 +16,6 @@ foreach (var file in files)
     Console.WriteLine($"Inserindo os registros na tabela {file.Replace(".xlsx", "")}.");
 
     var dt = ConvertExcelInDataTable(file);
-
-    //Validar os dados da planilha gerada (sempre que necessario
 
     InsertIntoInBase(dt);
 }
