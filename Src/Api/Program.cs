@@ -18,10 +18,12 @@ builder.Services.AddDbContext<CepBrasilDB>(options => options.UseSqlServer(build
 
 //Servicos
 builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IStateService, StateService>();
 
 //Repositorios
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IStateRepository, StateRepository>();
 
 #endregion
