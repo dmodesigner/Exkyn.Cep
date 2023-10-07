@@ -9,8 +9,13 @@ namespace Domain.Services
     public class AddressService : BaseService<Adresses>, IAddressService
     {
         private readonly IAddressRepository _Repository;
+        private readonly ICityRepository _CityRepository;
 
-        public AddressService(IAddressRepository Repository) : base(Repository) => _Repository = Repository;
+        public AddressService(IAddressRepository Repository, ICityRepository CityRepository) : base(Repository)
+        {
+            _Repository = Repository;
+            _CityRepository = CityRepository;
+        }
 
         public ReturnModel<ZipCodeModel> SearchByCep(string zipCode)
         {
@@ -37,11 +42,18 @@ namespace Domain.Services
             var result = _Repository.SearchByCep(zipCode);
 
             if (result == null)
-                return new ReturnModel<ZipCodeModel>()
+            {
+                result = _CityRepository.SearchByCep(zipCode);
+
+                if (result == null)
                 {
-                    Success = false,
-                    Message = $"Não encontramos um endereço com o CEP: {zipCode}"
-                };
+                    return new ReturnModel<ZipCodeModel>()
+                    {
+                        Success = false,
+                        Message = $"Não encontramos um endereço com o CEP: {zipCode}"
+                    };
+                }
+            }
 
             return new ReturnModel<ZipCodeModel>()
             {
