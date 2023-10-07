@@ -1,14 +1,19 @@
 ﻿using Aspose.Cells;
 using System.Data;
+using System.Net.Security;
 
-var files = new List<string>();
-files.Add("Estado.xlsx");
-files.Add("Cidade.xlsx");
-files.Add("Bairro.xlsx");
-files.Add("Endereço.xlsx");
+var files = new List<string>
+{
+    "Estado.xlsx",
+    "Cidade.xlsx",
+    "Bairro.xlsx",
+    "Endereço.xlsx"
+};
 
 foreach (var file in files)
 {
+    Console.WriteLine($"Inserindo os registros na tabela {file.Replace(".xlsx", "")}.");
+
     var dt = ConvertExcelInDataTable(file);
 
     //Validar os dados da planilha gerada (sempre que necessario
@@ -16,11 +21,21 @@ foreach (var file in files)
     InsertIntoInBase(dt);
 }
 
+Console.WriteLine("Todos os registros foram inseridos com sucesso.");
+
+string GetPath()
+{
+    var pathAbsolute = Path.GetFullPath("Program.cs");
+
+    var array = pathAbsolute.Split("CreateBase");
+
+    return string.Concat(array[0], "CreateBase\\", "Files\\");
+
+}
+
 DataTable ConvertExcelInDataTable(string file)
 {
-    const string path = "C:\\Projetos\\Exkyn.Cep\\Batch\\CreateBase\\Files\\";
-
-    Workbook excel = new Workbook(path + file);
+    Workbook excel = new Workbook(GetPath() + file);
 
     if (excel == null)
         throw new ArgumentException("O arquivo da planilha importada não foi encontrada.");
