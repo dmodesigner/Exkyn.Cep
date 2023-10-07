@@ -9,9 +9,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 #region Connection String
-var teste = Environment.GetEnvironmentVariable("ConnectionCepBrasil");
 
-builder.Services.AddDbContext<CepBrasilDB>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CepBrasil")));
+builder.Services.AddDbContext<CepBrasilDB>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings:CepBrasil")));
 
 #endregion
 
