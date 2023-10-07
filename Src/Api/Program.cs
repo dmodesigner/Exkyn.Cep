@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Connection String
 
-builder.Services.AddDbContext<CepBrasilDB>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings:CepBrasil")));
+builder.Services.AddDbContext<CepBrasilDB>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CepBrasil")));
 
 #endregion
 
