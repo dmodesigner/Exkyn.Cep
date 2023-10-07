@@ -34,4 +34,6 @@ app.MapGet("/buscar/endereco/{zipCode}", (string zipCode, [FromServices]IAddress
 
 app.MapGet("/buscar/cep/{address}", (string address, [FromServices]IAddressService addressService) => addressService.SearchByAddress(address));
 
+app.MapGet("/state/", ([FromServices] IStateService stateService) => stateService.SearchByState());
+
 app.Run();
