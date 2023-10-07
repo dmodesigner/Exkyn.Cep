@@ -1,6 +1,8 @@
 ﻿using Aspose.Cells;
 using System.Data;
+using System.Data.SqlClient;
 using System.Net.Security;
+using System.Transactions;
 
 var files = new List<string>
 {
@@ -53,5 +55,18 @@ DataTable ConvertExcelInDataTable(string file)
 
 void InsertIntoInBase(DataTable dt)
 {
-    throw new NotImplementedException("Método não implementado");
+    using(TransactionScope transectionScope = new TransactionScope())
+    {
+        SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("ConnectionStrings:CepBrasil"));
+        connection.Open();
+
+        using(SqlBulkCopy sql = new SqlBulkCopy(connection))
+        {
+            sql.DestinationTableName = dt.TableName;
+            sql.WriteToServer(dt);
+        }
+
+        transectionScope.Complete();
+        connection.Close();
+    }
 }
