@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Interfaces.Models;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
 using Domain.Models;
@@ -8,91 +7,49 @@ namespace Domain.Services
 {
     public class AddressService : BaseService<Adresses>, IAddressService
     {
-        private readonly IAddressRepository _Repository;
-        private readonly ICityRepository _CityRepository;
+        private readonly IAddressRepository _addressRepository;
+        private readonly ICityRepository _cityRepository;
 
-        public AddressService(IAddressRepository Repository, ICityRepository CityRepository) : base(Repository)
+        public AddressService(IAddressRepository addressRepository, ICityRepository cityRepository) : base(addressRepository)
         {
-            _Repository = Repository;
-            _CityRepository = CityRepository;
+            _addressRepository = addressRepository;
+            _cityRepository = cityRepository;
         }
 
-        public ReturnModel<ZipCodeModel> SearchByCep(string zipCode)
+        public ZipCodeModel SearchByCep(string zipCode)
         {
+            if (string.IsNullOrEmpty(zipCode) || zipCode.Length != 8)
+                throw new ArgumentException("Você deve informar o CEP no formato 99999999 ou 99999-999");
+
             zipCode = zipCode.Replace("-", "");
 
-            #region Validações
-
-            if (string.IsNullOrEmpty(zipCode) || zipCode.Length != 8)
-                return new ReturnModel<ZipCodeModel>()
-                {
-                    Success = false,
-                    Message = "Informe um cep valido (Formato: 99999999 ou 99999-999)"
-                };
-
             if (!int.TryParse(zipCode, out int numero))
-                return new ReturnModel<ZipCodeModel>()
-                {
-                    Success = false,
-                    Message = "CEP deve conter apenas números"
-                };
+                throw new ArgumentException("O CEP não deve conter letras ou outros caracteres especiais.");
 
-            #endregion
-
-            var result = _Repository.SearchByCep(zipCode);
+            var result = _addressRepository.SearchByCep(zipCode);
 
             if (result == null)
-            {
-                result = _CityRepository.SearchByCep(zipCode);
+                result = _cityRepository.SearchByCep(zipCode);
 
-                if (result == null)
-                {
-                    return new ReturnModel<ZipCodeModel>()
-                    {
-                        Success = false,
-                        Message = $"Não encontramos um endereço com o CEP: {zipCode}"
-                    };
-                }
-            }
+            if (result == null)
+                throw new ArgumentException($"Não foi possível encontrar nenhum endereço com o CEP {zipCode}");
 
-            return new ReturnModel<ZipCodeModel>()
-            {
-                Success = true,
-                Message = "Ok",
-                Object = result
-            };
+            return result;
         }
 
-        public ReturnModel<ZipCodeModel> SearchByAddress(string address)
+        public List<ZipCodeModel> SearchByAddress(string address)
         {
+            if (string.IsNullOrEmpty(address) || address.Length < 3)
+                throw new ArgumentException("Você deve informar pelo menos 3 caracteres para realizar a busca de endereços.");
+
             address = address.Trim();
 
-            #region Validações
-
-            if (string.IsNullOrEmpty(address))
-                return new ReturnModel<ZipCodeModel>()
-                {
-                    Success = false,
-                    Message = "Informe um cep valido (Formato: 99999999 ou 99999-999)"
-                };
-
-            #endregion
-
-            var result = _Repository.SearchByAddress(address);
+            var result = _addressRepository.SearchByAddress(address);
 
             if (result == null || result.Count() == 0)
-                return new ReturnModel<ZipCodeModel>()
-                {
-                    Success = false,
-                    Message = $"Não encontramos nenhum endereço com a informação {address}."
-                };
+                throw new ArgumentException($"Não localizamos nenhum endereço com o valor {address} informado.");
 
-            return new ReturnModel<ZipCodeModel>()
-            {
-                Success = true,
-                Message = "Ok",
-                List = result
-            };
+            return result;
         }
     }
 }

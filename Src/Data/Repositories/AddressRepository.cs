@@ -1,7 +1,7 @@
 ﻿using Data.DB;
 using Domain.Entities;
-using Domain.Interfaces.Models;
 using Domain.Interfaces.Repositories;
+using Domain.Models;
 
 namespace Data.Repositories
 {

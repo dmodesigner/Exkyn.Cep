@@ -1,7 +1,7 @@
 ﻿using Data.DB;
 using Domain.Entities;
-using Domain.Interfaces.Models;
 using Domain.Interfaces.Repositories;
+using Domain.Models;
 
 namespace Data.Repositories
 {
@@ -22,6 +22,19 @@ namespace Data.Repositories
                         State = s.State,
                         FU = s.FU
                     }).FirstOrDefault();
+        }
+
+        public List<Cities> SearchByState(string fu)
+        {
+            return (from c in _ctx.Cities
+                    join s in _ctx.States on c.StateID equals s.StateID
+                    where s.FU == fu
+                    select c).ToList();
+        }
+
+        public List<Cities> SearchByState(int stateId)
+        {
+            return _ctx.Cities.Where(x => x.StateID == stateId).ToList();
         }
     }
 }

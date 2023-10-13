@@ -1,4 +1,4 @@
-﻿namespace Domain.Interfaces.Models
+﻿namespace Domain.Models
 {
     public class ZipCodeModel
     {

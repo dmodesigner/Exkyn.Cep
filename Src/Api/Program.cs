@@ -32,10 +32,15 @@ builder.Services.AddScoped<IStateRepository, StateRepository>();
 
 var app = builder.Build();
 
-app.MapGet("/buscar/endereco/{zipCode}", (string zipCode, [FromServices]IAddressService addressService) => addressService.SearchByCep(zipCode));
+app.MapGet("/estado/", ([FromServices] IStateService stateService) => Results.Ok(stateService.SearchByState()));
 
-app.MapGet("/buscar/cep/{address}", (string address, [FromServices]IAddressService addressService) => addressService.SearchByAddress(address));
+app.MapGet("/cidade/{estadoID}", ([FromServices] ICityService cityService, int estadoID) => Results.Ok(cityService.SearchByState(estadoID)));
+app.MapGet("/cidade/buscar/{uf}", ([FromServices] ICityService cityService, string uf) => Results.Ok(cityService.SearchByState(uf)));
 
-app.MapGet("/state/", ([FromServices] IStateService stateService) => stateService.SearchByState());
+app.MapGet("/bairro/{estadoID}/{cidadeID}", ([FromServices] INeighborhoodService neighborhoodService, int estadoID, int cidadeID) => Results.Ok(neighborhoodService.SearchByStateAndCity(estadoID, cidadeID)));
+app.MapGet("/bairro/buscar/{uf}/{cidade}", ([FromServices] INeighborhoodService neighborhoodService, string uf, string cidade) => Results.Ok(neighborhoodService.SearchByStateAndCity(uf, cidade)));
+
+app.MapGet("/endereco/buscar/{cep}", ([FromServices] IAddressService addressService, string cep) => Results.Ok(addressService.SearchByCep(cep)));
+app.MapGet("/endereco/buscar/cep/{endereco}", ([FromServices] IAddressService addressService, string endereco) => Results.Ok(addressService.SearchByAddress(endereco)));
 
 app.Run();
