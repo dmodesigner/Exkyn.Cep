@@ -2,9 +2,13 @@ using Data.DB;
 using Data.Repositories;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
+using Domain.Models;
 using Domain.Services;
+using Exkyn.Core.Helpers;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +36,37 @@ builder.Services.AddScoped<IStateRepository, StateRepository>();
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler(app => app.Run(async context =>
+    {
+        var exception = context.Features.Get<IExceptionHandlerPathFeature>()?.Error;
+
+        var response = new ReturnModel
+        {
+            Success = false,
+            StatusCode = HttpStatusCode.InternalServerError,
+            Message = "Parece que a API não respondeu como deveria. Por favor, tente novamente mais tarde."
+        };
+
+        if (exception is ArgumentException || exception is ArgumentNullException)
+        {
+            response.StatusCode = HttpStatusCode.BadRequest;
+            response.Message = exception.Message;
+        }
+        else
+            LogHelpers.Save("C:\\Temp\\CepBrasil\\", string.Format("Log de Erro em {0:yyyy-MM-dd}.txt", DateTime.Now), exception);
+
+        await context.Response.WriteAsJsonAsync(response);
+    }));
+}
+
+#region Endpoint da API
+
 app.MapGet("/estado/", ([FromServices] IStateService stateService) => Results.Ok(stateService.SearchByState()));
 
 app.MapGet("/cidade/{estadoID}", ([FromServices] ICityService cityService, int estadoID) => Results.Ok(cityService.SearchByState(estadoID)));
@@ -42,5 +77,13 @@ app.MapGet("/bairro/buscar/{uf}/{cidade}", ([FromServices] INeighborhoodService 
 
 app.MapGet("/endereco/buscar/{cep}", ([FromServices] IAddressService addressService, string cep) => Results.Ok(addressService.SearchByCep(cep)));
 app.MapGet("/endereco/buscar/cep/{endereco}", ([FromServices] IAddressService addressService, string endereco) => Results.Ok(addressService.SearchByAddress(endereco)));
+
+//Eliminar esse endpoint quando terminar os testes
+app.MapGet("/erro", () =>
+{
+    throw new InvalidOperationException("Parece que a API não respondeu como deveria. Por favor, tente novamente mais tarde.");
+});
+
+#endregion
 
 app.Run();
