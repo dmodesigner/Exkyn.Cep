@@ -13,6 +13,8 @@ using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string? directoryLog = builder.Configuration.GetSection("Directory:Log").Value;
+
 #region Connection String
 
 builder.Services.AddDbContext<CepBrasilDB>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CepBrasil")));
@@ -60,7 +62,7 @@ else
             response.Message = exception.Message;
         }
         else
-            LogHelpers.Save("C:\\Temp\\CepBrasil\\", string.Format("Log de Erro em {0:yyyy-MM-dd}.txt", DateTime.Now), exception);
+            LogHelpers.Save(directoryLog, string.Format("Log de Erro em {0:yyyy-MM-dd}.txt", DateTime.Now), exception);
 
         await context.Response.WriteAsJsonAsync(response);
     }));
