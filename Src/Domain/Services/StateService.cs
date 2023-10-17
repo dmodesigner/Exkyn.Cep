@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
-using Domain.Models;
 
 namespace Domain.Services
 {
@@ -11,25 +10,14 @@ namespace Domain.Services
 
         public StateService(IStateRepository Repository) : base(Repository) => _Repository = Repository;
 
-        public ReturnModel<States> SearchByState()
+        public List<States> SearchByState()
         {
             var result = _Repository.SearchByState();
 
             if (result == null)
-                return new ReturnModel<States>()
-                {
-                    Success = false,
-                    Message = "Não encontramos nenhum estado para listar."
-                };
+                throw new ArgumentException("Não há regitro de estado cadastrado.");
 
-            return new ReturnModel<States>()
-            {
-                Success = true,
-                Message = "Ok",
-                List = result
-                    .OrderBy(x => x.State)
-                    .ToList()
-            };
+            return result;
         }
     }
 }

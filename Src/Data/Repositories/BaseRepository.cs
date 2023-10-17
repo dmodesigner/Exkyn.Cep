@@ -12,6 +12,10 @@ namespace Data.Repositories
 
         public BaseRepository(CepBrasilDB ctx) => _ctx = ctx;
 
+        public virtual List<TEntity> SearchAll() => _ctx.Set<TEntity>().ToList();
+
+        public virtual List<TEntity> SearchAll(TEntity entity) => throw new NotImplementedException("A classe deve ser implementada de forma individual para cada método que deseja usar");
+
         public TEntity? Search(int ID) => _ctx.Set<TEntity>().Find(ID);
 
         public void Dispose() => _ctx.Dispose();
