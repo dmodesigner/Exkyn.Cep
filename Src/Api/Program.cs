@@ -9,6 +9,7 @@ using Exkyn.Core.Helpers;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,24 @@ builder.Services.AddScoped<IStateRepository, StateRepository>();
 
 var app = builder.Build();
 
+#region Configurações da cultura de idioma
+
+var supportCulture = new[]
+{
+    new CultureInfo("pt-BR")
+};
+
+app.UseRequestLocalization(new RequestLocalizationOptions()
+{
+    DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("pt-BR"),
+    SupportedCultures = supportCulture,
+    SupportedUICultures = supportCulture
+});
+
+#endregion
+
+#region Configurações para captura de erros
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -67,6 +86,8 @@ else
         await context.Response.WriteAsJsonAsync(response);
     }));
 }
+
+#endregion
 
 #region Endpoint da API
 
