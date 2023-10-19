@@ -28,7 +28,7 @@ jobs:
       run: dotnet restore
       
     - name: Gera o Pacote
-      run: dotnet publish -p:PublishProfile=FolderProfile -c Release -r win-x64 -o ${{ env.LOCAL }}
+      run: dotnet publish -p:PublishProfile=FolderProfile -c Release -o ${{ env.LOCAL }}
       
     - name: Sincronizar arquivos
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4      
