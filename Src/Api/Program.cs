@@ -16,6 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 string? directoryLog = builder.Configuration.GetSection("Directory:Log").Value;
 
+builder.Services.AddCors(options => options.AddPolicy(name: "All", b => b.WithOrigins("*")));
+
 #region Connection String
 
 builder.Services.AddDbContext<CepBrasilDB>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CepBrasil")));
