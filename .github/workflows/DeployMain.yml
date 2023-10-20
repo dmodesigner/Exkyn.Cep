@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: Obter a última versão do código
+    - name: Obtem a última versão do código
       uses: actions/checkout@v3
 
     - name: Setup .NET
@@ -28,9 +28,9 @@ jobs:
       run: dotnet restore
       
     - name: Gera o Pacote
-      run: dotnet publish -p:PublishProfile=FolderProfile -c Release -o ${{ env.LOCAL }}
+      run: dotnet publish --no-self-contained -r win-x64 -p:PublishReadyToRun-true -c release -o ${{ env.LOCAL }}
       
-    - name: Sincronizar arquivos
+    - name: Publica os Arquivos
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4      
       with:
         server: ${{ secrets.HOST_FTP }}
