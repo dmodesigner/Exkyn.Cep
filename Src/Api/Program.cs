@@ -15,8 +15,9 @@ using System.Net;
 var builder = WebApplication.CreateBuilder(args);
 
 string? directoryLog = builder.Configuration.GetSection("Directory:Log").Value;
+string? nameCors = "AccessToEveryone";
 
-builder.Services.AddCors(options => options.AddPolicy(name: "All", b => b.WithOrigins("*")));
+builder.Services.AddCors(options => options.AddPolicy(name: nameCors, b => b.WithOrigins("*")));
 
 #region Connection String
 
@@ -61,9 +62,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions()
 #region Configurações para captura de erros
 
 if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
+	app.UseDeveloperExceptionPage();
 else
 {
     app.UseExceptionHandler(app => app.Run(async context =>
@@ -130,4 +129,5 @@ app.MapGet("/endereco/buscar/cep/{endereco}", ([FromServices] IAddressService ad
 
 #endregion
 
+app.UseCors(nameCors);
 app.Run();
