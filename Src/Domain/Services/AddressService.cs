@@ -18,10 +18,13 @@ namespace Domain.Services
 
         public ZipCodeModel SearchByCep(string zipCode)
         {
-            if (string.IsNullOrEmpty(zipCode) || zipCode.Length != 8)
-                throw new ArgumentException("Você deve informar o CEP no formato 99999999 ou 99999-999");
+            if (string.IsNullOrEmpty(zipCode))
+                throw new ArgumentException("Você deve informar o CEP");
 
             zipCode = zipCode.Replace("-", "");
+
+            if (zipCode.Length != 8)
+                throw new ArgumentException("Você deve informar o CEP no formato 99999999 ou 99999-999");
 
             if (!int.TryParse(zipCode, out int numero))
                 throw new ArgumentException("O CEP não deve conter letras ou outros caracteres especiais.");
