@@ -22,13 +22,13 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
         
     - name: Restaura as Dependencias
       run: dotnet restore
       
     - name: Gera o Pacote
-      run: dotnet publish --no-self-contained -r win-x64 -p:PublishReadyToRun=true -c release -o ${{ env.LOCAL }}
+      run: dotnet publish --no-self-contained -r win-x64 -c release -o ${{ env.LOCAL }}
       
     - name: Publica os Arquivos
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4      
