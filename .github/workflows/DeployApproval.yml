@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: Obtem a última versão do código
+    - name: Obtem o código
       uses: actions/checkout@v3
 
-    - name: Setup .NET
+    - name: Configura o .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
@@ -30,6 +30,9 @@ jobs:
     - name: Gera o Pacote
       run: dotnet publish --no-self-contained -r win-x64 -c release -o ${{ env.LOCAL }}
       
+    - name: Para o pool do IIS
+      run: powershell ./StopIIS.ps1 "teste.exkyn.com.br"
+
     - name: Publica os Arquivos
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4      
       with:
@@ -38,3 +41,6 @@ jobs:
         password: ${{ secrets.PASSWORD_FTP }}
         local-dir: ${{ env.LOCAL }}
         server-dir: ${{ env.SERVER }}
+
+    - name: Inicia o pool do IIS
+      run: powershell ./StopIIS.ps1 "teste.exkyn.com.br"
