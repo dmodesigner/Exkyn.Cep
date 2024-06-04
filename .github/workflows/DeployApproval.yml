@@ -8,7 +8,7 @@ on:
 
 env:
   LOCAL: ${{ github.workspace }}/output/
-  SERVER: "hmg.exkyn.com.br/"
+  SERVER: "hmg.exkyn.com.br"
   
 jobs:
   web-deploy:
@@ -31,7 +31,7 @@ jobs:
       run: dotnet publish --no-self-contained -r win-x64 -c release -o ${{ env.LOCAL }}
       
     - name: Para o pool do IIS
-      run: powershell ./StopIIS.ps1 "teste.exkyn.com.br"
+      run: powershell ./StopIIS.ps1 ${{ env.SERVER }}
 
     - name: Publica os Arquivos
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4      
@@ -43,4 +43,4 @@ jobs:
         server-dir: ${{ env.SERVER }}
 
     - name: Inicia o pool do IIS
-      run: powershell ./StopIIS.ps1 "teste.exkyn.com.br"
+      run: powershell ./StopIIS.ps1 ${{ env.SERVER }}
