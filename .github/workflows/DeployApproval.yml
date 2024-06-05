@@ -8,7 +8,7 @@ on:
 
 env:
   LOCAL: ${{ github.workspace }}/output/
-  SERVER: "hmg.exkyn.com.br"
+  SERVER: "hmg.exkyn.com.br/"
   
 jobs:
   web-deploy:
