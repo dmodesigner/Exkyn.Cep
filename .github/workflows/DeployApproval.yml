@@ -29,9 +29,6 @@ jobs:
       
     - name: Gera o Pacote
       run: dotnet publish --no-self-contained -r win-x64 -c release -o ${{ env.LOCAL }}
-      
-    - name: Para o pool do IIS
-      run: powershell ./StopIIS.ps1 ${{ env.SERVER }}
 
     - name: Publica os Arquivos
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4      
@@ -41,6 +38,3 @@ jobs:
         password: ${{ secrets.PASSWORD_FTP }}
         local-dir: ${{ env.LOCAL }}
         server-dir: ${{ env.SERVER }}
-
-    - name: Inicia o pool do IIS
-      run: powershell ./StopIIS.ps1 ${{ env.SERVER }}
