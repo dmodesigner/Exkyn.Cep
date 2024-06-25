@@ -1,3 +1,4 @@
+using Api.Localization;
 using Data.DB;
 using Data.Repositories;
 using Domain.Entities;
@@ -43,25 +44,11 @@ builder.Services.AddScoped<IStateRepository, StateRepository>();
 
 var app = builder.Build();
 
-#region Configurações da cultura de idioma
-
-var supportCulture = new[]
-{
-    new CultureInfo("pt-BR")
-};
-
-app.UseRequestLocalization(new RequestLocalizationOptions()
-{
-    DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("pt-BR"),
-    SupportedCultures = supportCulture,
-    SupportedUICultures = supportCulture
-});
-
-#endregion
+app.UseRequestLocalization(new RequestLocalization().Execute());
 
 #region Configurações para captura de erros
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() && false)
 	app.UseDeveloperExceptionPage();
 else
 {
@@ -80,6 +67,8 @@ else
         {
             response.StatusCode = HttpStatusCode.BadRequest;
             response.Message = exception.Message;
+
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
         }
         else
             LogHelpers.Save(directoryLog, string.Format("Log de Erro em {0:yyyy-MM-dd}.txt", DateTime.Now), exception);
@@ -117,10 +106,7 @@ app.MapGet("/bairro/buscar/{uf}/{cidade}", ([FromServices] INeighborhoodService 
     List = neighborhoodService.SearchByStateAndCity(uf, cidade)
 }));
 
-app.MapGet("/endereco/buscar/{cep}", ([FromServices] IAddressService addressService, string cep) => Results.Ok(new ReturnModel<ZipCodeModel>
-{
-    Object = addressService.SearchByCep(cep)
-}));
+app.MapGet("/endereco/buscar/{cep}", ([FromServices] IAddressService addressService, string cep) => Results.Ok(addressService.SearchByCep(cep)));
 
 app.MapGet("/endereco/buscar/cep/{endereco}", ([FromServices] IAddressService addressService, string endereco) => Results.Ok(new ReturnModel<ZipCodeModel>
 {
