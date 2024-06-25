@@ -1,4 +1,5 @@
 using Api.Localization;
+using Api.Middleware;
 using Data.DB;
 using Data.Repositories;
 using Domain.Entities;
@@ -6,16 +7,11 @@ using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
 using Domain.Models;
 using Domain.Services;
-using Exkyn.Core.Helpers;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string? directoryLog = builder.Configuration.GetSection("Directory:Log").Value;
 string? nameCors = "AccessToEveryone";
 
 builder.Services.AddCors(options => options.AddPolicy(name: nameCors, b => b.WithOrigins("*")));
@@ -27,6 +23,8 @@ builder.Services.AddDbContext<CepBrasilDB>(options => options.UseSqlServer(build
 #endregion
 
 #region IOC
+
+builder.Services.AddSingleton(new ErrorHandlingMiddleware(builder.Configuration.GetSection("Directory:Log").Value));
 
 //Servicos
 builder.Services.AddScoped<IAddressService, AddressService>();
@@ -46,38 +44,10 @@ var app = builder.Build();
 
 app.UseRequestLocalization(new RequestLocalization().Execute());
 
-#region Configurações para captura de erros
-
-if (app.Environment.IsDevelopment() && false)
+if (app.Environment.IsDevelopment())
 	app.UseDeveloperExceptionPage();
 else
-{
-    app.UseExceptionHandler(app => app.Run(async context =>
-    {
-        var exception = context.Features.Get<IExceptionHandlerPathFeature>()?.Error;
-
-        var response = new ReturnModel
-        {
-            Success = false,
-            StatusCode = HttpStatusCode.InternalServerError,
-            Message = "Parece que a API não respondeu como deveria. Por favor, tente novamente mais tarde."
-        };
-
-        if (exception is ArgumentException || exception is ArgumentNullException)
-        {
-            response.StatusCode = HttpStatusCode.BadRequest;
-            response.Message = exception.Message;
-
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
-        }
-        else
-            LogHelpers.Save(directoryLog, string.Format("Log de Erro em {0:yyyy-MM-dd}.txt", DateTime.Now), exception);
-
-        await context.Response.WriteAsJsonAsync(response);
-    }));
-}
-
-#endregion
+	app.UseMiddleware<ErrorHandlingMiddleware>();
 
 #region Endpoint da API
 
