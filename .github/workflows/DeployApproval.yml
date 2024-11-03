@@ -9,6 +9,8 @@ on:
 env:
   LOCAL: ${{ github.workspace }}/output/
   SERVER: "hmg.exkyn.com.br/"
+  SERVER_IP: "50.114.32.175"
+  POOL: "hmg.exkyn.com.br"
   
 jobs:
   web-deploy:
@@ -29,6 +31,15 @@ jobs:
       
     - name: Gera o Pacote
       run: dotnet publish --no-self-contained -r win-x64 -c release -o ${{ env.LOCAL }}
+
+    - name: Parar o pool do IIS
+      uses: im-open/app-pool-action@v2.0.4
+      with:
+        action: 'stop'
+        server: ${{ env.SERVER_IP }}
+        app-pool-name: ${{ env.POOL }}
+        service-account-id: ${{ secrets.USER_SERVER }}
+        service-account-password: ${{ secrets.PASSWORD_SERVER }}
 
     - name: Publica os Arquivos
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
