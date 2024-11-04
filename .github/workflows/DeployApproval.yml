@@ -31,7 +31,7 @@ jobs:
       run: dotnet publish --no-self-contained -r win-x64 -c release -o ${{ env.LOCAL }}
 
     - name: Publica os Arquivos
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.HOST_FTP }}
         username: ${{ secrets.USER_FTP }}
