@@ -17,10 +17,10 @@ jobs:
     steps:
     
     - name: Obtem o código
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Configura o .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
         
@@ -31,7 +31,7 @@ jobs:
       run: dotnet publish --no-self-contained -r win-x64 -c release -o ${{ env.LOCAL }}
 
     - name: Publica os Arquivos
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4      
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.HOST_FTP }}
         username: ${{ secrets.USER_FTP }}
