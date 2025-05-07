@@ -28,7 +28,9 @@ public class ErrorHandlingMiddleware : IMiddleware
 			context.Response.StatusCode = StatusCodes.Status400BadRequest;
 		}
 		else
-			LogHelpers.Save(_directoryLog, string.Format("Log de Erro em {0:yyyy-MM-dd}.txt", DateTime.Now), exception);
+		{
+			//Enviar o log de erro para o Seq
+		}
 
 		await context.Response.WriteAsJsonAsync(response);
 	}
