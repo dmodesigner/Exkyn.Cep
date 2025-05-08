@@ -1,6 +1,8 @@
 ﻿
 using Domain.Models;
 using Exkyn.Core.Helpers;
+using Serilog.Core;
+using Serilog;
 using System.Net;
 
 namespace Api.Middleware;
@@ -29,7 +31,18 @@ public class ErrorHandlingMiddleware : IMiddleware
 		}
 		else
 		{
-			//Enviar o log de erro para o Seq
+			var logLevel = new LoggingLevelSwitch();
+
+			Log.Logger = new LoggerConfiguration()
+				.MinimumLevel.Error()
+				.WriteTo.Seq("http://localhost:5341",
+					apiKey: Environment.GetEnvironmentVariable("SeqApiKey"),
+					controlLevelSwitch: logLevel)
+				.CreateLogger();
+
+			Log.Error(exception, $"[Api Cep] {exception.Message}");
+
+			Log.CloseAndFlush();
 		}
 
 		await context.Response.WriteAsJsonAsync(response);
