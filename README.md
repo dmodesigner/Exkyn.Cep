@@ -51,6 +51,7 @@ Crie uma variável de ambiente chamada ConnectionStrings:CepBrasil e atribua a e
 ```
 ConnectionStrings:CepBrasil=SuaStringDeConexaoAqui
 ```
+
 Caso seja de sua preferência pode ser configurado no arquivo de configurações do .NET *appsettings.json*
 
 ```json
@@ -69,13 +70,13 @@ Para criar e popular o banco de dados, execute o batch disponível no repositór
 Com o ambiente configurado, siga estes passos:
 
 1. **Clone o repositório:**\
-   ```bash
-   git clone https://github.com/dmodesigner/Exkyn.Cep.git
-   ```
+```bash
+git clone https://github.com/dmodesigner/Exkyn.Cep.git
+```
 
 2. **Navegue até o diretório do projeto**\
 ```bash
-   cd seu-repositorio
+cd seu-repositorio
 ```
 
 3. **Execute a API:**\
