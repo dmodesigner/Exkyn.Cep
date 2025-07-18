@@ -32,9 +32,10 @@ GET /estado
 GET /cidade/{estadoID}
 ```
 
-| Parâmetro | Tipo | Descrição    |
-| --------- | ---- | ------------ |
-| estadoID  | int  | ID do estado |
+| Parâmetro | Tipo   | Descrição       |
+| --------- | ------ | --------------  |
+| estadoID  | int    | ID do estado    |
+| uf        | string | Sigla do estado |
 
 #### Resposta:
 
@@ -58,7 +59,7 @@ GET /cidade/buscar/{uf}
 
 | Parâmetro | Tipo   | Descrição       |
 | --------- | ------ | --------------- |
-| uf        | string | Sigla do estado |
+cc
 
 ---
 
