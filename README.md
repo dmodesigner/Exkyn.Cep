@@ -1,740 +1,150 @@
-# Cep Brasil
+# Cep Brasil API 🇧🇷
 
-Esse projeto permite através de uma API consultar Cep do Brasil.
+Uma API RESTful completa para consulta de endereços, cidades, estados e bairros do Brasil. O projeto oferece diversos endpoints para buscar informações detalhadas a partir de um CEP, nome de logradouro, ou através de filtros por estado e cidade.
 
-## Variáveis de Ambiente
+## ✨ Funcionalidades
 
-Esse projeto faz uso de variáveis de ambiente para uso da conexão com o banco de dados.
+- Consulta de endereço completo por CEP.
 
-*Para executar esse projeto você precisara criar uma variável de ambiente com o nome abaixo e seta as informações para acessar sua base de dados*
+- Busca de CEP por nome de logradouro (rua, avenida, etc.).
 
-`ConnectionStrings:CepBrasil`
+- Listagem de todos os estados brasileiros.
 
-## Como Executar o Projeto
+- Listagem de cidades por estado (utilizando ID ou a sigla UF).
 
-#### 1. Criar o banco de dados
+- Listagem de bairros por cidade (utilizando IDs ou nomes).
 
-Para criar o banco de dados você poderá executar o batch criado para esse fim através do repositório: [Exkyn.Cep.CreateDataBase](https://github.com/dmodesigner/Exkyn.Cep.CreateDataBase).
+- Disponibilização de uma versão online para testes e demonstração.
 
-#### 2. Executando a API
+## 📋 Pré-requisitos
 
-Após executar o passo anterior e deixar a variável de ambiente com a conexão de base de dados devidamente configurada, você poderá executar a API através de um programa editor de código como o VS Code ou Visual Studio.
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 
-## Versão Publicada
+- Git
 
-Caso prefira ver o projeto em execução sem ter que baixar e configurar o projeto, acesse a URL abaixo e complete a URL com uma das opções descritas na sessão Documentação da API.
+- Um SDK .NET compatível (ex: .NET 6, 7 ou 8).
 
-`https://cep.exkyn.com.br`
-## Documentação da API
+- Um banco de dados SQL Server da Microsoft para armazenar os dados.
 
-#### Retorna todos os estados brasileiros
+- Um editor de código de sua preferência, como VS Code ou Visual Studio.
+
+## ⚙️ Configuração
+
+Para executar o projeto localmente, siga os passos abaixo:
+
+1. **Variáveis de Ambiente**\
+Este projeto utiliza uma variável de ambiente para a string de conexão com o banco de dados.
+
+Crie uma variável de ambiente chamada ConnectionStrings:CepBrasil e atribua a ela a sua string de conexão.
+
+```
+ConnectionStrings:CepBrasil=SuaStringDeConexaoAqui
+```
+
+Caso seja de sua preferência pode ser configurado no arquivo de configurações do .NET *appsettings.json*
+
+```json
+{
+  "ConnectionStrings": {
+    "CepBrasil": "Server=localhost;Database=CepBrasil;User Id=sa;Password=SuaSenhaAqui;"
+  }
+}
+```
+
+2. **Banco de Dados**\
+Para criar e popular o banco de dados, execute o batch disponível no repositório complementar: [Exkyn.Cep.CreateDataBase](https://github.com/dmodesigner/Exkyn.Cep.CreateDataBase)
+
+## 🚀 Executando o Projeto
+
+Com o ambiente configurado, siga estes passos:
+
+1. **Clone o repositório:**\
+```bash
+git clone https://github.com/dmodesigner/Exkyn.Cep.git
+```
+
+2. **Navegue até o diretório do projeto**\
+```bash
+cd seu-repositorio
+```
+
+3. **Execute a API:**\
+Abra o projeto no VS Code e execute o comando:
+
+```bash
+dotnet run
+```
+
+Ou no Visual Studio, clique em "Iniciar" ou pressione `F5`.
+
+## 🌐 Versão Online (Demonstração)
+
+Caso prefira ver o projeto em execução sem a necessidade de configuração local, acesse a API através da URL base abaixo. Complete a URL com um dos endpoints descritos na documentação.
+
+URL Base: ***[https://cep.exkyn.com.br](https://cep.exkyn.com.br)***
+
+## 📖 Documentação da API
+
+A seguir estão os endpoints disponíveis na API. Veja o detalhamento completo no arquivo [README_API.md](./README_API.md).
+
+### Estados
+
+Retorna todos os estados brasileiros
 
 ```http
-  GET /estado
+GET /estado
 ```
-#### Exemplo de resposta
 
-```javascript
+```json
 {
     "success": true,
     "statusCode": 200,
     "message": null,
     "object": null,
     "list": [
-        {
-            "stateID": 1,
-            "fu": "AC",
-            "state": "Acre"
-        },
-        {
-            "stateID": 2,
-            "fu": "AL",
-            "state": "Alagoas"
-        },
-        {
-            "stateID": 3,
-            "fu": "AP",
-            "state": "Amapá"
-        },
-        {
-            "stateID": 4,
-            "fu": "AM",
-            "state": "Amazonas"
-        },
-        {
-            "stateID": 5,
-            "fu": "BA",
-            "state": "Bahia"
-        },
-        {
-            "stateID": 6,
-            "fu": "CE",
-            "state": "Ceará"
-        },
-        {
-            "stateID": 7,
-            "fu": "DF",
-            "state": "Distrito Federal"
-        },
-        {
-            "stateID": 8,
-            "fu": "ES",
-            "state": "Espírito Santo"
-        },
-        {
-            "stateID": 10,
-            "fu": "GO",
-            "state": "Goiás"
-        },
-        {
-            "stateID": 11,
-            "fu": "MA",
-            "state": "Maranhão"
-        },
-        {
-            "stateID": 12,
-            "fu": "MT",
-            "state": "Mato Grosso"
-        },
-        {
-            "stateID": 13,
-            "fu": "MS",
-            "state": "Mato Grosso do Sul"
-        },
-        {
-            "stateID": 14,
-            "fu": "MG",
-            "state": "Minas Gerais"
-        },
-        {
-            "stateID": 15,
-            "fu": "PA",
-            "state": "Pará"
-        },
-        {
-            "stateID": 16,
-            "fu": "PB",
-            "state": "Paraíba"
-        },
-        {
-            "stateID": 17,
-            "fu": "PR",
-            "state": "Paraná"
-        },
-        {
-            "stateID": 18,
-            "fu": "PE",
-            "state": "Pernambuco"
-        },
-        {
-            "stateID": 19,
-            "fu": "PI",
-            "state": "Piauí"
-        },
-        {
-            "stateID": 20,
-            "fu": "RJ",
-            "state": "Rio de Janeiro"
-        },
-        {
-            "stateID": 21,
-            "fu": "RN",
-            "state": "Rio Grande do Norte"
-        },
-        {
-            "stateID": 22,
-            "fu": "RS",
-            "state": "Rio Grande do Sul"
-        },
-        {
-            "stateID": 23,
-            "fu": "RO",
-            "state": "Rondônia"
-        },
-        {
-            "stateID": 9,
-            "fu": "RR",
-            "state": "Roraima"
-        },
-        {
-            "stateID": 25,
-            "fu": "SC",
-            "state": "Santa Catarina"
-        },
-        {
-            "stateID": 26,
-            "fu": "SP",
-            "state": "São Paulo"
-        },
-        {
-            "stateID": 27,
-            "fu": "SE",
-            "state": "Sergipe"
-        },
-        {
-            "stateID": 24,
-            "fu": "TO",
-            "state": "Tocantins"
-        }
+        { "stateID": 1, "fu": "AC", "state": "Acre" },
+        { "stateID": 2, "fu": "AL", "state": "Alagoas" },
+        { "stateID": 3, "fu": "AP", "state": "Amapá" }
+         // ... demais estados
     ]
 }
 ```
 
-#### Retorna todas as cidades com base em um estado brasileiro
+### Cidades
+
+Retorna todas as cidades de um estado
 
 ```http
-  GET /cidade/{estadoID}
+GET /cidade/{estadoID}
+GET /cidade/buscar/{uf}
 ```
 
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
-| `estadoID`      | `int` | **Obrigatório**. O ID da cidade que deseja obter as informações |
+| Parâmetro | Tipo   | Descrição       |
+| --------- | ------ | --------------  |
+| estadoID  | int    | ID do estado    |
+| uf        | string | Sigla do estado |
 
-#### Exemplo de resposta
-
-```javascript
+```json
 {
     "success": true,
     "statusCode": 200,
-    "message": null,
-    "object": null,
     "list": [
-        {
-            "cityID": 1,
-            "stateID": 1,
-            "zipCode": "69945000",
-            "city": "Acrelândia",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 2,
-            "stateID": 1,
-            "zipCode": "69935000",
-            "city": "Assis Brasil",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 3,
-            "stateID": 1,
-            "zipCode": "69932000",
-            "city": "Brasiléia",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 4,
-            "stateID": 1,
-            "zipCode": "69926000",
-            "city": "Bujari",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 5,
-            "stateID": 1,
-            "zipCode": "69931000",
-            "city": "Capixaba",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 6,
-            "stateID": 1,
-            "zipCode": "69980000",
-            "city": "Cruzeiro do Sul",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 7,
-            "stateID": 1,
-            "zipCode": "69934000",
-            "city": "Epitaciolândia",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 8,
-            "stateID": 1,
-            "zipCode": "69960000",
-            "city": "Feijó",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 9,
-            "stateID": 1,
-            "zipCode": "69975000",
-            "city": "Jordão",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 10,
-            "stateID": 1,
-            "zipCode": "69990000",
-            "city": "Mâncio Lima",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 11,
-            "stateID": 1,
-            "zipCode": "69950000",
-            "city": "Manoel Urbano",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 12,
-            "stateID": 1,
-            "zipCode": "69983000",
-            "city": "Marechal Thaumaturgo",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 13,
-            "stateID": 1,
-            "zipCode": "69928000",
-            "city": "Plácido de Castro",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 14,
-            "stateID": 1,
-            "zipCode": "69927000",
-            "city": "Porto Acre",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 15,
-            "stateID": 1,
-            "zipCode": "69982000",
-            "city": "Porto Walter",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 16,
-            "stateID": 1,
-            "zipCode": "0000NULL",
-            "city": "Rio Branco",
-            "capital": true,
-            "states": null
-        },
-        {
-            "cityID": 17,
-            "stateID": 1,
-            "zipCode": "69985000",
-            "city": "Rodrigues Alves",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 18,
-            "stateID": 1,
-            "zipCode": "69955000",
-            "city": "Santa Rosa do Purus",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 19,
-            "stateID": 1,
-            "zipCode": "69940000",
-            "city": "Sena Madureira",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 20,
-            "stateID": 1,
-            "zipCode": "69925000",
-            "city": "Senador Guiomard",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 21,
-            "stateID": 1,
-            "zipCode": "69970000",
-            "city": "Tarauacá",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 22,
-            "stateID": 1,
-            "zipCode": "69930000",
-            "city": "Xapuri",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 9947,
-            "stateID": 1,
-            "zipCode": "69929000",
-            "city": "Campinas",
-            "capital": false,
-            "states": null
-        }
+        { "cityID": 1, "stateID": 1, "zipCode": "69945000", "city": "Acrelândia", "capital": false },
+        { "cityID": 2, "stateID": 1, "zipCode": "69935000", "city": "Assis Brasil", "capital": false },
+        { "cityID": 16, "stateID": 1, "zipCode": "0000NULL", "city": "Rio Branco", "capital": true }
+        // ... demais cidades
     ]
 }
 ```
 
-#### Retorna todas as cidades com base em um estado brasileiro
+## 👨‍💻 Autor
 
-```http
-  GET /cidade/buscar/{uf}
-```
+Criado por Daniel Moura
 
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
-| `uf`      | `string` | **Obrigatório**. A UF da cidade que deseja obter as informações |
+[Github](https://github.com/dmodesigner/) | [Linkedin](https://br.linkedin.com/in/danieldmo)
 
-#### Exemplo de resposta
+## 📜 Licença
 
-```javascript
-{
-    "success": true,
-    "statusCode": 200,
-    "message": null,
-    "object": null,
-    "list": [
-        {
-            "cityID": 1,
-            "stateID": 1,
-            "zipCode": "69945000",
-            "city": "Acrelândia",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 2,
-            "stateID": 1,
-            "zipCode": "69935000",
-            "city": "Assis Brasil",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 3,
-            "stateID": 1,
-            "zipCode": "69932000",
-            "city": "Brasiléia",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 4,
-            "stateID": 1,
-            "zipCode": "69926000",
-            "city": "Bujari",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 5,
-            "stateID": 1,
-            "zipCode": "69931000",
-            "city": "Capixaba",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 6,
-            "stateID": 1,
-            "zipCode": "69980000",
-            "city": "Cruzeiro do Sul",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 7,
-            "stateID": 1,
-            "zipCode": "69934000",
-            "city": "Epitaciolândia",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 8,
-            "stateID": 1,
-            "zipCode": "69960000",
-            "city": "Feijó",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 9,
-            "stateID": 1,
-            "zipCode": "69975000",
-            "city": "Jordão",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 10,
-            "stateID": 1,
-            "zipCode": "69990000",
-            "city": "Mâncio Lima",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 11,
-            "stateID": 1,
-            "zipCode": "69950000",
-            "city": "Manoel Urbano",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 12,
-            "stateID": 1,
-            "zipCode": "69983000",
-            "city": "Marechal Thaumaturgo",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 13,
-            "stateID": 1,
-            "zipCode": "69928000",
-            "city": "Plácido de Castro",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 14,
-            "stateID": 1,
-            "zipCode": "69927000",
-            "city": "Porto Acre",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 15,
-            "stateID": 1,
-            "zipCode": "69982000",
-            "city": "Porto Walter",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 16,
-            "stateID": 1,
-            "zipCode": "0000NULL",
-            "city": "Rio Branco",
-            "capital": true,
-            "states": null
-        },
-        {
-            "cityID": 17,
-            "stateID": 1,
-            "zipCode": "69985000",
-            "city": "Rodrigues Alves",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 18,
-            "stateID": 1,
-            "zipCode": "69955000",
-            "city": "Santa Rosa do Purus",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 19,
-            "stateID": 1,
-            "zipCode": "69940000",
-            "city": "Sena Madureira",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 20,
-            "stateID": 1,
-            "zipCode": "69925000",
-            "city": "Senador Guiomard",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 21,
-            "stateID": 1,
-            "zipCode": "69970000",
-            "city": "Tarauacá",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 22,
-            "stateID": 1,
-            "zipCode": "69930000",
-            "city": "Xapuri",
-            "capital": false,
-            "states": null
-        },
-        {
-            "cityID": 9947,
-            "stateID": 1,
-            "zipCode": "69929000",
-            "city": "Campinas",
-            "capital": false,
-            "states": null
-        }
-    ]
-}
-```
+Este projeto é distribuído sob a licença MIT. Isso significa que você tem total liberdade para usar, copiar, modificar e distribuir o projeto, seja para uso pessoal ou comercial.
 
-#### Retorna os bairros que pertence a cidade e estado informado
-
-```http
-  GET /bairro/{estadoID}/{cidadeID}
-```
-
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
-| `estadoID`      | `int` | **Obrigatório**. O ID do estado  |
-| `cidadeID`      | `int` | **Obrigatório**. O ID da cidade  |
-
-#### Exemplo de resposta
-
-```javascript
-{
-    "success": true,
-    "statusCode": 200,
-    "message": null,
-    "object": null,
-    "list": [
-        {
-            "neighborhoodID": 32555,
-            "cityID": 1,
-            "stateID": 1,
-            "neighborhood": "Centro",
-            "cities": null,
-            "states": null
-        }
-    ]
-}
-```
-
-#### Retorna os bairros que pertence a cidade e estado informado
-
-```http
-  GET /bairro/{uf}/{cidade}
-```
-
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
-| `uf`      | `string` | **Obrigatório**. A UF do estado  |
-| `cidade`      | `string` | **Obrigatório**. O nome da cidade  |
-
-#### Exemplo de resposta
-
-```javascript
-{
-    "success": true,
-    "statusCode": 200,
-    "message": null,
-    "object": null,
-    "list": [
-        {
-            "neighborhoodID": 32555,
-            "cityID": 1,
-            "stateID": 1,
-            "neighborhood": "Centro",
-            "cities": null,
-            "states": null
-        }
-    ]
-}
-```
-
-#### Retorna os dados do CEP informado
-
-```http
-  GET /endereco/busca/{cep}
-```
-
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
-| `cep`      | `string` | **Obrigatório**. CEP que deseja buscar as informações no formato 99999-999 ou 99999999  |
-
-#### Exemplo de resposta
-
-```javascript
-{
-    "success": true,
-    "statusCode": 200,
-    "message": null,
-    "object": {
-        "zipCode": "03510040",
-        "address": "Rua Doutor Edgar Garcia Vieira",
-        "neighborhood": "Vila Matilde",
-        "city": "São Paulo",
-        "capital": true,
-        "state": "São Paulo",
-        "fu": "SP"
-    },
-    "list": null
-}
-```
-
-#### Retorna os dados do CEP informado
-
-```http
-  GET /endereco/buscar/cep/{logradouro}
-```
-
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
-| `logradouro`      | `string` | **Obrigatório**. Nome da rua ou parte do nome da rua que deseja obter o CEP |
-
-#### Exemplo de resposta
-
-```javascript
-{
-    "success": true,
-    "statusCode": 200,
-    "message": null,
-    "object": null,
-    "list": [
-        {
-            "zipCode": "03510040",
-            "address": "Rua Doutor Edgar Garcia Vieira",
-            "neighborhood": "Vila Matilde",
-            "city": "São Paulo",
-            "capital": true,
-            "state": "São Paulo",
-            "fu": "SP"
-        },
-        {
-            "zipCode": "45204105",
-            "address": "Rua Edgar Garcia Ribeiro Filho",
-            "neighborhood": "São Judas Tadeu",
-            "city": "Jequié",
-            "capital": false,
-            "state": "Bahia",
-            "fu": "BA"
-        }
-    ]
-}
-```
-## Autor
-
-- Criado por [Daniel Moura](https://github.com/dmodesigner/)
-## Licença
-
-Esse projeto é oferecido sobre uso da licença MIT. Sendo livre seu uso pessoal ou comercial.
-
-Sendo oferecido sem garantias e de sua total responsabilidade seu uso.
-
-Para maiores detalhes consulte o arquivo de [licença](https://github.com/dmodesigner/Exkyn.Cep/blob/main/LICENSE.txt).
+O software é fornecido "COMO ESTÁ", sem garantias de qualquer tipo. Para mais detalhes, consulte o [arquivo LICENSE](https://github.com/dmodesigner/Exkyn.Cep/blob/main/LICENSE.txt) no repositório.
