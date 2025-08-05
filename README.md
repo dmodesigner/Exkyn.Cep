@@ -2,17 +2,6 @@
 
 Uma API RESTful completa para consulta de endereços, cidades, estados e bairros do Brasil. O projeto oferece diversos endpoints para buscar informações detalhadas a partir de um CEP, nome de logradouro, ou através de filtros por estado e cidade.
 
-## Sumário
-
-- [Funcionalidades](#funcionalidades)
-- [Pré-requisitos](#pré-requisitos)
-- [Configuração](#configuração)
-- [Executando o Projeto](#executando-o-projeto)
-- [Versão Online](#versão-online)
-- [Documentação da API](#documentação-da-api)
-- [Autor](#autor)
-- [Licença](#licença)
-
 ## ✨ Funcionalidades
 
 - Consulta de endereço completo por CEP.
@@ -96,7 +85,7 @@ URL Base: ***[https://cep.exkyn.com.br](https://cep.exkyn.com.br)***
 
 ## 📖 Documentação da API
 
-A seguir estão os endpoints disponíveis na API. Veja o detalhamento completo no arquivo [API.md](./API.md).
+A seguir estão os endpoints disponíveis na API. Veja o detalhamento completo no arquivo [README_API.md](./README_API.md).
 
 ### Estados
 
