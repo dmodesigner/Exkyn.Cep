@@ -43,6 +43,8 @@ public class ErrorHandlingMiddleware : IMiddleware
 			Log.Error(exception, $"[Api Cep] {exception.Message}");
 
 			Log.CloseAndFlush();
+
+			context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 		}
 
 		await context.Response.WriteAsJsonAsync(response);
